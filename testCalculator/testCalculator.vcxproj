@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{46872f59-77d2-4e8d-ae6a-87f8cceedb83}</ProjectGuid>
-    <RootNamespace>mp2lab3stack</RootNamespace>
+    <ProjectGuid>{ee6a28b0-5bbe-45e0-bd8e-9dbc348137cc}</ProjectGuid>
+    <RootNamespace>testCalculator</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -138,14 +138,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="mp2-lab3-stack.cpp" />
-    <ClCompile Include="TCalculator.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="TCalculator.h" />
-    <ClInclude Include="TStack.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
