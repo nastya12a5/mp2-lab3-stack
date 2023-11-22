@@ -3,11 +3,19 @@
 
 #include <iostream>
 #include "TStack.h"
+#include "TCalculator.h"
+using namespace std;
 /* Написана реалтзация класса TStack 
 */
 int main()
 {
-    TStack <int> st;
+    TStack <int> st(20);
+    TCalculator calcul;
+
+    string s1 = "()";
+    calcul.SetInfix(s1);
+    if (calcul.CheckExpression()) cout << "right" << endl;
+    else cout << "wrong" << endl;
 
 }
 
