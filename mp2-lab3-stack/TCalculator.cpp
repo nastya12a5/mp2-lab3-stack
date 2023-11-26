@@ -1,97 +1,152 @@
 #include "TCalculator.h"
-#include "TStack.h"
-#include <iostream>
-#include "string"
+
 using namespace std;
-void TCalculator::SetInfix(const string& expr)
-{
-	infix = expr;
-}
-string TCalculator::GetInfix()
-{
-	return infix;
-}
-string TCalculator::GetPostfix()
-{
-	return postfix;
-}
+
 bool TCalculator::CheckExpression()
 {
-	int res = 0;
-	for (int i = 0; i < infix.size(); i++)
-	{
-		if (infix[i] == '(')
-		{
-			st.Push(infix[i]);
-		}
-		if (infix[i] == ')')
-		{
-			if (st.empty()) res = 1;else st.Pop();
-			
-		}
-	}
-	if (!st.empty()) res = 2;
-	if (res == 1 || res == 2) return false;
-	if (res == 0) return true;
+    if (st.Empty() == false)
+    {
+        this->st.Clear();
+    }
+    int res = 0;
+    for (int i = 0; i < infix.size(); i++)
+    {
+        if (infix[i] == '(')
+        {
+            st.Push(infix[i]);
+        }
+        if (infix[i] == ')')
+        {
+            if (!st.Empty())
+            {
+                st.Pop();
+            }
+            else
+                res = 1;
+        }
+    }
+    if (!st.Empty())
+        res = 1;
+    if (res == 0)
+    {
+        return true;
+    }
+    else
+        return false;
 }
-int TCalculator::prior(char op)
+
+void TCalculator::SetInfix(std::string str)
 {
-	if (op == '+' || op == '-') return 1;
-	if (op == '*' || op == '/') return 2;
-	if (op == '^') return 3;
-	if (op == '(' || op == ')') return 0;
+    infix = str;
 }
+
+std::string TCalculator::GetPostfix()
+{
+    return postfix;
+}
+
+std::string TCalculator::GetInfix()
+{
+    return infix;
+}
+
 double TCalculator::CalcPostfix()
 {
-	D.~TStack();
-	for (int i = 0; i < postfix.size(); i++)
-	{
-		if (postfix[i] >= '0' && postfix[i] <= '9')
-		{
-			D.Push(postfix[i] - '0');
-		}
-		else if (postfix[i] == '+' || postfix[i] == '-' || postfix[i] == '*' || postfix[i] == '/' || postfix[i] == '^')
-		{
-			double x1, x2, y;
-			x2 = D.Pop(); x1 = D.Pop();
-			if (postfix[i] == '+') y = x1 + x2;
-			if (postfix[i] == '-') y = x1 - x2;
-			if (postfix[i] == '*') y = x1 * x2;
-			if (postfix[i] == '/') y = x1 / x2;
-			//if (postfix[i] == '^') y = x1 ^ x2;
-			D.Push(y);
-		}
+    if (D.Empty() == false)
+    {
+        this->D.Clear();
+    }
+    for (int i = 0; i < postfix.length(); i++)
+    {
+        if (postfix[i] >= '0' && postfix[i] <= '9')
+        {
+            D.Push(postfix[i] - '0');
+        }
 
-		return D.Pop();
-	}
+
+        if ((postfix[i] == '+') || (postfix[i] == '-') || (postfix[i] == '*') || (postfix[i] == '/') || (postfix[i] == '^'))
+        {
+            double x1 = 0; double x2 = 0; double  y = 0;
+            if (D.Empty() == false)
+            {
+                x2 = D.Pop();
+            }
+            if (D.Empty() == false)
+            {
+                x1 = D.Pop();
+            }
+            if (postfix[i] == '+') y = x1 + x2;
+            if (postfix[i] == '-') y = x1 - x2;
+            if (postfix[i] == '*')  y = x1 * x2;
+            if (postfix[i] == '/') y = x1 / x2;
+            if (postfix[i] == '^') y = pow(x1, x2);
+
+            D.Push(y);
+
+        }
+
+    }
+    double res;
+    if (D.Empty() == false)
+    {
+        res = D.Pop();
+    }
+    else
+    {
+        throw "stack is empty";
+    }
+
+
+    if (!D.Empty())
+    {
+        throw "problems with res";
+    }
+    return res;
 }
+
 void TCalculator::ToPostfix()
 {
-	st.~TStack();
-	string str = "(" + infix + ")";
-	postfix.~basic_string();
-	for (int i = 0; i < str.size(); i++)
-	{
-		if (str[i] == '(') { st.Push('('); }
-		else if (str[i] >= '0' && str[i] <= '9') { postfix += str[i]; }
-		else if (str[i] == ')')
-		{
-			char el = st.Pop();
-			while (el != '(')
-			{
-				postfix += el;
-				el = st.Pop();
+    if (st.Empty() == false)
+    {
+        this->st.Clear();
+    }
+    string str = '(' + infix + ')';
+    for (int i = 0; i < str.size(); i++)
+    {
+        if (str[i] == '(')
+        {
+            st.Push('(');
+        }
+        if (str[i] >= '0' && str[i] <= '9')
+        {
+            postfix += str[i];
+        }
+        if (str[i] == ')')
+        {
+            char el = st.Pop();
+            while (el != '(')
+            {
+                postfix += el;
+                el = st.Pop();
             }
-		}
-		if (postfix[i] == '+' || postfix[i] == '-' || postfix[i] == '*' || postfix[i] == '/' || postfix[i] == '^')
-		{
-			char el = st.Pop();
-			while (prior(el) >= prior(str[i]))
-			{
-				postfix += el;
-				el = st.Pop();
-			}
-		}
-	}
-	
+        }
+        if ((str[i] == '+') || (str[i] == '-') || (str[i] == '*') || (str[i] == '/') || (str[i] == '^'))
+        {
+            char el = st.Pop();
+
+            if (prior(el) >= prior(str[i]))
+            {
+                postfix += el;
+                el = st.Pop();
+            }
+            else
+            {
+                st.Push(el);
+            }
+            st.Push(str[i]);
+        }
+
+
+    }
+
 }

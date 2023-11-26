@@ -1,21 +1,19 @@
 ﻿// mp2-lab3-stack.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
 //
 
+#include <string>
 #include <iostream>
-#include "TStack.h"
+#include "Tstack.h"
 #include "TCalculator.h"
 using namespace std;
-/* Написана реалтзация класса TStack 
-*/
 int main()
 {
-    TStack <int> st(20);
-    TCalculator calcul;
+	string s = "(2+2)*2^2";
+	TCalculator a(s);
 
-    string s1 = "()";
-    calcul.SetInfix(s1);
-    if (calcul.CheckExpression()) cout << "right" << endl;
-    else cout << "wrong" << endl;
+	cout << a.CalcPostfix() << std::endl;
+
+	if (a.CheckExpression()) cout << "right" << endl;
 
 }
 

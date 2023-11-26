@@ -1,11 +1,37 @@
-
+#define _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING
 #include "../mp2-lab3-stack/TCalculator.h"
 #include "gtest.h"
-
+using namespace std;
 
 TEST(TCalculator, can_create_calculator)
 {
-    ASSERT_NO_THROW(TCalculator calc);
+    string a = "2+2";
+    ASSERT_NO_THROW(TCalculator calc(a));
+}
+TEST(TCalculator, can_get_infix_form_of_calculator)
+{
+    std::string a = "2+(3*5)";
+    std::string b;
+    TCalculator calc(a);
+    ASSERT_NO_THROW(b = calc.GetInfix());
+    EXPECT_EQ(a, b);
+}
+TEST(TCalculator, can_set_infix_form_of_calculator)
+{
+    string a = "2+(3*5)";
+    string b;
+    TCalculator calc(a);
+    ASSERT_NO_THROW(calc.SetInfix(b));
+    EXPECT_EQ(calc.GetInfix(), b);
+}
+TEST(TCalculator, can_get_postfix_form_of_calculator)
+{
+    string a = "2+(3*5)";
+    string b = "235*+";
+    string c;
+    TCalculator calc(a);
+    ASSERT_NO_THROW(c = calc.GetPostfix());
+    EXPECT_EQ(c, b);
 }
 /*
 TEST(TBitField, can_create_bitfield_with_positive_length)

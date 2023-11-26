@@ -1,76 +1,110 @@
 #pragma once
+#include <algorithm>
 #include <iostream>
 using namespace std;
 template <class T>
-class TStack
+class Tstack
 {
 	T* pMem;
 	int MaxSize;
 	int CurrInd;
 public:
-	TStack(int _MaxSize = 10) {
-		if (CurrInd > MaxSize) throw("Wrong size");
+	Tstack& operator = (const Tstack& s)
+	{
+		if (*this == s)
+		{
+			return *this;
+		}
+		delete[] pMem;
+		CurrInd = s.CurrInd;
+		MaxSize = s.MaxSize;
+		pMem = new T[s.MaxSize];
+		copy(s.pMem, s.pMem + CurrInd, pMem);
+		return *this;
+
+	}
+	~Tstack()
+	{
+		delete[] pMem;
+	}
+	Tstack(int _MaxSize = 10)
+	{
+		if (_MaxSize < 1)
+		{
+			throw "wrong size";
+		}
 		MaxSize = _MaxSize;
 		pMem = new T[MaxSize];
 		CurrInd = -1;
 	}
-	~TStack()
-	{
-		delete[] pMem;
-	}
-	TStack(const TStack& s)
+	Tstack(const Tstack& s)
 	{
 		MaxSize = s.MaxSize;
-		pMem = new T[MaxSize];
 		CurrInd = s.CurrInd;
+		delete[]pMem;
+		pMem = new T[MaxSize];
+
 		for (int i = 0; i <= CurrInd; i++)
 		{
 			pMem[i] = s.pMem[i];
 		}
 	}
-	TStack& operator=(const TStack& s)
+	bool Empty()
 	{
-		if (this != &s)
-		{
-			if (MaxSize != s.MaxSize)
-			{
-				delete[]pMem;
-				MaxSize = s.MaxSize;
-				pMem = new T[MaxSize];
-			}
-			CurrInd = s.CurrInd;
-			for (int i = 0; i < CurrInd; i++)
-			{
-				pMem[i] = s.pMem[i];
-			}
-		}
-		return *this;
+		return CurrInd == -1;
 	}
-	bool empty() {
-		if (CurrInd == -1) { return true; }
-		else return false;
-	}
-	bool full()
+	bool Full()
 	{
-		if (CurrInd == MaxSize - 1) return true;
-		else return false;
+		return CurrInd == MaxSize - 1;
 	}
-	void Push(const T& el) {
-		if (CurrInd + 1 >= MaxSize)
+	void Push(T elem)
+	{
+		if (CurrInd >= MaxSize - 1)
 		{
-			throw("Overflow");
+			throw("Stack Overflow");
 		}
+		pMem[CurrInd + 1] = elem;
 		CurrInd++;
-		pMem[CurrInd + 1] = el;
 	}
 	T Pop()
 	{
-		if (CurrInd == -1)
+		if (this->Empty() == true)
 		{
-			throw("Dtack is empty");
+			throw("Stack is empty");
 		}
 		CurrInd--;
-		return pMem[CurrInd++];
+		return pMem[CurrInd + 1];
 	}
-};
+	int GetCurrInd()
+	{
+		return CurrInd;
+	}
+	T First_el()
+	{
+		if (CurrInd == -1)
+			throw ("Stack is empty");
+		return pMem[CurrInd];
+	}
+	void Clear()
+	{
+		while (!this->Empty())
+		{
+			this->Pop();
+		}
+	}
+	void Output()
+	{
+		if (CurrInd == -1)
+		{
+			cout << "stack is empty" << endl;
+		}
+		cout << '(';
+		for (int i = 0; i <= CurrInd; i++)
+		{
+			cout << pMem[i] << "";
 
+		}
+		cout << ")" << endl;
+	}
+
+};
