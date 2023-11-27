@@ -23,5 +23,7 @@ public:
 	string GetPostfix();
 	string GetInfix();
 	double CalcPostfix();
-
+	double Calc();
+	void OutputPostfix();
+	void OutputInfix();
 };

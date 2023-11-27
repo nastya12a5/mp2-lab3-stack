@@ -99,7 +99,11 @@ double TCalculator::CalcPostfix()
 
     if (!D.Empty())
     {
-        throw "problems with res";
+        throw "many operands";
+    }
+    if (!st.Empty())
+    {
+        throw "many operations";
     }
     return res;
 }
@@ -146,6 +150,111 @@ void TCalculator::ToPostfix()
             st.Push(str[i]);
         }
 
+
+    }
+
+}
+double TCalculator::Calc() {
+    st.Clear(); D.Clear();
+    string str = '(' + infix + ')';
+    for (int i = 0; i < str.size(); i++)
+    {
+        if (str[i] == '(') st.Push(str[i]);
+        if (str[i] == ')')
+        {
+            char el = st.Pop();
+            while (el != '(')
+            {
+                double x2 ;
+                double x1 ;
+                double y;
+                if (D.Empty() == false)
+                {
+                    x2 = D.Pop();
+                }
+                if (D.Empty() == false)
+                {
+                    x1 = D.Pop();
+                }
+                if (el == '+') y = x1 + x2;
+                if (el == '-') y = x1 - x2;
+                if (el == '*')  y = x1 * x2;
+                if (el == '/') y = x1 / x2;
+                if (el == '^') y = pow(x1, x2);
+                D.Push(y); el = st.Pop();
+            }
+        }
+        if (str[i] >= '0' && str[i] <= '9')
+        {
+            size_t pos;
+            double x;
+            x = stod(&str[i] ,& pos);
+            D.Push(x); i = i + pos - 1;
+        }
+        if ((str[i] == '+') || (str[i] == '-') || (str[i] == '*') || (str[i] == '/') || (str[i] == '^'))
+        {
+            char el = st.Pop();
+            while (prior(el) >= prior(str[i]))
+            {
+                double x2; double x1; double y;
+                if (D.Empty() == false)
+                {
+                    x2 = D.Pop();
+                }
+                if (D.Empty() == false)
+                {
+                    x1 = D.Pop();
+                }
+                if (el == '+') y = x1 + x2;
+                if (el == '-') y = x1 - x2;
+                if (el == '*')  y = x1 * x2;
+                if (el == '/') y = x1 / x2;
+                if (el == '^') y = pow(x1, x2);
+                D.Push(y); el = st.Pop();
+            }
+            st.Push(el);
+            st.Push(str[i]);
+        }
+    }
+    double res;
+    if (D.Empty() == false)
+    {
+        res = D.Pop();
+    }
+    else
+    {
+        throw "stack is empty";
+    }
+
+
+    if (!D.Empty())
+    {
+        throw "many operands";
+    }
+    if (!st.Empty())
+    {
+        throw "many operations";
+    }
+    return res;
+}
+void TCalculator::OutputPostfix()
+{
+    
+   
+    for (int i = 0; i <= postfix.size(); i++)
+    {
+        cout << postfix[i] << "";
+       
+    }
+    
+}
+void TCalculator::OutputInfix()
+{
+
+
+    for (int i = 0; i <= infix.size(); i++)
+    {
+        cout << infix[i] << "";
 
     }
 
