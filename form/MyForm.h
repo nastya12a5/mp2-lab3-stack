@@ -1,5 +1,5 @@
 #pragma once
-#include "Figure.h"
+
 #include "../mp2-lab3-stack/TCalculator.h"
 #include <string>
 #include <iostream>
@@ -27,12 +27,7 @@ namespace CppWinForm1 {
 		MyForm(void)
 		{
 			InitializeComponent();
-			figures = new Figure * [size];
-	
 			
-			figures[0] = new Rectangle1(100, 50, 50, 50);
-			figures[1] = new Ellipse1(25, 25, 75, 125);
-			figures[2] = new Ellipse1(25, 25, 125, 125);
 			//TCalculator a;
 			gr = CreateGraphics();
 			//Graphics^ gr = CreateGraphics();
@@ -53,8 +48,7 @@ namespace CppWinForm1 {
 			}
 		}
 
-		Figure** figures;
-		int size = 3;
+		
 		Graphics^ gr;
 	private: System::Windows::Forms::Button^ button1;
 	private: System::Windows::Forms::TextBox^ textBox1;

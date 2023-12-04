@@ -33,6 +33,24 @@ TEST(TCalculator, can_get_postfix_form_of_calculator)
     ASSERT_NO_THROW(c = calc.GetPostfix());
     EXPECT_EQ(c, b);
 }
+TEST(TCalculator, true_in_right_expr)
+{
+    string s = "2+(3*5)";
+    TCalculator a(s);
+    EXPECT_EQ(true, a.CheckExpression());
+}
+TEST(TCalculator, false_in_wrong_expr)
+{
+    string s = "2+(3*5";
+    TCalculator a(s);
+    EXPECT_EQ(false, a.CheckExpression());
+}
+TEST(TCalculator, right_long_calc)
+{
+    string s= "(((2.543 + 2) * 2 ^ 2 - 3) / 2) + 9";
+    TCalculator a(s);
+    EXPECT_EQ(a.Calc(), 16.586);
+}
 /*
 TEST(TBitField, can_create_bitfield_with_positive_length)
 {

@@ -8,7 +8,7 @@
 using namespace std;
 int main()
 {
-	string s = "(2.543+2)*2^2";
+	string s = "(((2.543+2)*2^2-3)/2)+9";
 	TCalculator a(s);
 	cout << "Infix: " ;
 	a.OutputInfix();
