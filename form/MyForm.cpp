@@ -1,18 +1,10 @@
 #include "MyForm.h"
-
 using namespace System;
 using namespace System::Windows::Forms;
-
-
-[STAThread]
-
-void Main(cli::array<String^>^ args)
-
-{
-	
-	Application::EnableVisualStyles();
+[STAThreadAttribute]
+int main(cli::array<String^>^ args) {
 	Application::SetCompatibleTextRenderingDefault(false);
-
-	CppWinForm1::MyForm form;
+	Application::EnableVisualStyles();
+	calc::MyForm form;
 	Application::Run(% form);
 }

@@ -1,15 +1,11 @@
 #pragma once
+//#include"../mp2-lab3-stack/TCalculator.h"
+#include "Calculator.h"
+#include<string>
 
-#include "../mp2-lab3-stack/TCalculator.h"
-#include <string>
-#include <iostream>
-#include "../mp2-lab3-stack/TStack.h"
-#include <msclr/marshal_cppstd.h>
-#include <msclr/marshal.h>
-using namespace System;
-using namespace std;
+//#include<marshal_cppstd.h>
 
-namespace CppWinForm1 {
+namespace calc {
 
 	using namespace System;
 	using namespace System::ComponentModel;
@@ -17,9 +13,9 @@ namespace CppWinForm1 {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
-    #include <iostream>
+
 	/// <summary>
-	/// Summary for MyForm
+	/// —водка дл€ MyForm
 	/// </summary>
 	public ref class MyForm : public System::Windows::Forms::Form
 	{
@@ -27,18 +23,14 @@ namespace CppWinForm1 {
 		MyForm(void)
 		{
 			InitializeComponent();
-			
-			//TCalculator a;
-			gr = CreateGraphics();
-			//Graphics^ gr = CreateGraphics();
 			//
-			//TODO: Add the constructor code here
+			//TODO: добавьте код конструктора
 			//
 		}
 
 	protected:
 		/// <summary>
-		/// Clean up any resources being used.
+		/// ќсвободить все используемые ресурсы.
 		/// </summary>
 		~MyForm()
 		{
@@ -47,84 +39,81 @@ namespace CppWinForm1 {
 				delete components;
 			}
 		}
-
-		
-		Graphics^ gr;
-	private: System::Windows::Forms::Button^ button1;
-	private: System::Windows::Forms::TextBox^ textBox1;
-	private: System::Windows::Forms::TextBox^ textBox2;
-	private: System::Windows::Forms::Button^ button2;
-	private: System::Windows::Forms::Timer^ timer1;
-	private: System::ComponentModel::IContainer^ components;
+	private: System::Windows::Forms::Button^ equ;
+	private: System::Windows::Forms::TextBox^ setexpr;
+	protected:
 
 	protected:
 
+	private: System::Windows::Forms::Label^ expr;
+	private: System::Windows::Forms::Label^ answ;
+
+
+
+
 	private:
 		/// <summary>
-		/// Required designer variable.
+		/// ќб€зательна€ переменна€ конструктора.
 		/// </summary>
-
+		System::ComponentModel::Container ^components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
+		/// “ребуемый метод дл€ поддержки конструктора Ч не измен€йте 
+		/// содержимое этого метода с помощью редактора кода.
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->components = (gcnew System::ComponentModel::Container());
-			this->button1 = (gcnew System::Windows::Forms::Button());
-			//this->textBox1 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
-			this->button2 = (gcnew System::Windows::Forms::Button());
-			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
+			this->equ = (gcnew System::Windows::Forms::Button());
+			this->setexpr = (gcnew System::Windows::Forms::TextBox());
+			this->expr = (gcnew System::Windows::Forms::Label());
+			this->answ = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
-			// button1
+			// equ
 			// 
-			this->button1->Location = System::Drawing::Point(197, 12);
-			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(75, 23);
-			this->button1->TabIndex = 0;
-			this->button1->Text = L"button1";
-			this->button1->UseVisualStyleBackColor = true;
-			this->button1->Click += gcnew System::EventHandler(this, &MyForm::button1_Click);
+			this->equ->Location = System::Drawing::Point(165, 132);
+			this->equ->Name = L"equ";
+			this->equ->Size = System::Drawing::Size(27, 23);
+			this->equ->TabIndex = 0;
+			this->equ->Text = L"=";
+			this->equ->UseVisualStyleBackColor = true;
+			this->equ->Click += gcnew System::EventHandler(this, &MyForm::equ_Click);
 			// 
-			// textBox1
+			// setexpr
 			// 
-			/*this->textBox1->Location = System::Drawing::Point(0, 0);
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(100, 20);
-			this->textBox1->TabIndex = 1;*/
+			this->setexpr->Location = System::Drawing::Point(5, 135);
+			this->setexpr->Name = L"setexpr";
+			this->setexpr->Size = System::Drawing::Size(154, 20);
+			this->setexpr->TabIndex = 1;
 			// 
-			// textBox2
+			// expr
 			// 
-			this->textBox2->Location = System::Drawing::Point(0, 26);
-			this->textBox2->Name = L"textBox2";
-			this->textBox2->Size = System::Drawing::Size(100, 20);
-			this->textBox2->TabIndex = 2;
+			this->expr->AutoSize = true;
+			this->expr->Location = System::Drawing::Point(105, 93);
+			this->expr->Name = L"expr";
+			this->expr->Size = System::Drawing::Size(55, 13);
+			this->expr->TabIndex = 2;
+			this->expr->Text = L"Expession for Calc";
 			// 
-			// button2
+			// answ
 			// 
-			/*this->button2->Location = System::Drawing::Point(197, 41);
-			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(75, 23);
-			this->button2->TabIndex = 3;
-			this->button2->Text = L"button2";
-			this->button2->UseVisualStyleBackColor = true;
-			this->button2->Click += gcnew System::EventHandler(this, &MyForm::button2_Click);*/
+			this->answ->AutoSize = true;
+			this->answ->Location = System::Drawing::Point(198, 138);
+			this->answ->Name = L"answ";
+			this->answ->Size = System::Drawing::Size(13, 13);
+			this->answ->TabIndex = 3;
+			this->answ->Text = L"___";
 			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->BackColor = System::Drawing::Color::White;
 			this->ClientSize = System::Drawing::Size(284, 261);
-			this->Controls->Add(this->button2);
-			this->Controls->Add(this->textBox2);
-			this->Controls->Add(this->textBox1);
-			this->Controls->Add(this->button1);
-			this->ForeColor = System::Drawing::Color::DarkOrange;
+			this->Controls->Add(this->answ);
+			this->Controls->Add(this->expr);
+			this->Controls->Add(this->setexpr);
+			this->Controls->Add(this->equ);
 			this->Name = L"MyForm";
 			this->Text = L"MyForm";
 			this->Load += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
@@ -134,54 +123,22 @@ namespace CppWinForm1 {
 		}
 #pragma endregion
 	private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {
-	}
-	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
-		
-		/*for (int i = 0; i < 3; i++)
-		{
-			figures[i]->Show(gr);
-		}*/
-		/*String^ str = textBox1->Text;
-		
-		
-		std::string s = msclr::interop::marshal_as<std::string>(str);
-
-
-		TCalculator a(s);
-		cout << "Res: " << a.Calc() << endl;*/
+		String^ s = (setexpr->Text);
 
 	}
-
-	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e)
-	{
-		
-		//int dx = Convert::ToInt32(textBox1->Text);
-		/*int dy = Convert::ToInt32(textBox2->Text);
-		for (int i = 0; i < 3; i++)
-		{
-			figures[i]->Move(gr, dx, dy);
-		}
-		if (timer1->Enabled == false)
-			timer1->Enabled == true;
-		else
-			timer1->Enabled == false;
+	void MarshalString(String^ s, std::string& os) {
+		using namespace Runtime::InteropServices;
+		const char* chars =
+			(const char*)(Marshal::StringToHGlobalAnsi(s)).ToPointer();
+		os = chars;
+		Marshal::FreeHGlobal(IntPtr((void*)chars));
 	}
-	private: System::Void timer1_Tick(System::Object^ sender, System::EventArgs^ e) {
-		
-		for (int i = 0; i < 3; i++)
-		{
-			figures[i]->Hide(gr);
-		}
-		int dx = Convert::ToInt32(textBox1->Text);
-		int dy = Convert::ToInt32(textBox2->Text);
-
-		for (int i = 0; i < 3; i++)
-		{
-			figures[i]->Show(gr);
-		}*/
-
-	}
-	
-    };
-
+private: System::Void equ_Click(System::Object^ sender, System::EventArgs^ e) {
+	std::string s;
+	MarshalString(setexpr->Text, s);
+	TCalculator cal(s);
+	double res = cal.calc();
+	answ->Text = Convert::ToString(res);
+}
+};
 }
